@@ -1,0 +1,753 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Theme Variables */
+/* Floating buttons */
+.calendar-toggle, .theme-toggle {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.calendar-toggle {
+    left: 20px;
+    top: 20px;
+}
+
+.theme-toggle {
+    right: 20px;
+    top: 20px;
+}
+
+.calendar-toggle:hover, .theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-toggle i, .theme-toggle i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .calendar-toggle,
+[data-theme="dark"] .theme-toggle {
+    background-color: #333;
+    color: #fff;
+}
+:root {
+    /* Dark Theme (Default) */
+    --primary: #000000;
+    --primary-dark: #1a1a1a;
+    --secondary: #00ff9d;
+    --accent: #ff00ff;
+    --background: #121212;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --border: #333333;
+}
+
+[data-theme="light"] {
+    --primary: #ffffff;
+    --primary-dark: #f5f5f5;
+    --secondary: #8b4513;
+    --accent: #d2b48c;
+    --background: #f8f4e3;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border: #d2b48c;
+}
+
+body {
+    background: var(--background);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+header {
+    background: var(--primary);
+    color: var(--text-primary);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+    border: 1px solid var(--secondary);
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--secondary);
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+header p {
+    margin: 0.5rem 0 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+}
+
+.chat-container {
+    background: var(--primary);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+    overflow: hidden;
+    border: 1px solid var(--secondary);
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--primary);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--secondary);
+}
+
+.chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chat-header-title {
+    display: flex;
+    align-items: center;
+}
+
+.chat-header-title i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.chat-box {
+    height: 350px;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f8f9fa;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bot-message {
+    align-items: flex-start;
+}
+
+.user-message {
+    align-items: flex-end;
+}
+
+.message-content {
+    padding: 12px 15px;
+    border-radius: 18px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+.bot-message .message-content {
+    background: var(--primary-dark);
+    color: var(--text-primary);
+    border: 1px solid var(--secondary);
+}
+
+.user-message .message-content {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.user-input {
+    display: flex;
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.user-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--secondary);
+    border-radius: 25px;
+    background: var(--primary-dark);
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.user-input button {
+    width: 50px;
+    margin-left: 10px;
+    background: var(--secondary);
+    color: var(--primary);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.user-input button:hover {
+    background: var(--accent);
+}
+
+/* Footer styles */
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--text-primary);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+    border: 1px solid var(--secondary);
+}
+
+.footer a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* Concert list styles */
+.concert-list {
+    width: 100%;
+}
+
+.concert-list h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #4a00e0;
+}
+
+.concert-list ul {
+    list-style-type: none;
+}
+
+.concert-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.concert-list li:last-child {
+    border-bottom: none;
+}
+
+.concert-list li strong {
+    color: #333;
+}
+
+/* Concert grid and cards */
+.concert-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.concert-card {
+    background: var(--primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--secondary);
+}
+
+.concert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+}
+
+.concert-image {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+}
+
+.concert-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.concert-card:hover .concert-image img {
+    transform: scale(1.1);
+}
+
+.concert-info {
+    padding: 12px;
+}
+
+.concert-info h4 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+.concert-date, .concert-venue, .concert-genre {
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.ticket-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: var(--secondary);
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    transition: background 0.3s;
+}
+
+.ticket-button:hover {
+    background: var(--accent);
+}
+
+/* Typing indicator */
+.typing-indicator .message-content {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    background: #e3e3e3;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+}
+
+.typing-dots span {
+    height: 8px;
+    width: 8px;
+    margin: 0 2px;
+    background-color: var(--secondary);
+    border-radius: 50%;
+    display: block;
+    animation: typing 1.4s infinite ease-in-out both;
+}
+
+.typing-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typing {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .chat-box {
+        height: 300px;
+    }
+}
+
+@media (min-width: 500px) {
+    .concert-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Animation effects */
+.message {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.personal-note {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(0, 255, 157, 0.1);
+    border-left: 3px solid var(--secondary);
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background: var(--primary);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+    color: white;
+    border-right: 1px solid var(--secondary);
+}
+
+.author-info {
+    text-align: left;
+    margin-top: 2rem;
+}
+
+.author-info h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--secondary);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.author-info h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.author-info p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* Main Content Adjustment */
+.main-content {
+    margin-left: 200px;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: #ecf0f1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+        padding: 1rem;
+        align-items: center;
+    }
+    
+    .author-info {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: 0;
+        white-space: nowrap;
+    }
+    
+    .author-info h2 {
+        font-size: 1.2rem;
+    }
+    
+    .author-info p {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 60px;
+    }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: var(--primary);
+    border: 1px solid var(--secondary);
+    color: var(--text-primary);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+}
+
+.end-conversation-btn {
+    background: var(--primary-dark);
+    border: 1px solid var(--secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+}
+
+.end-conversation-btn:hover {
+    background-color: var(--accent);
+    color: var(--primary);
+    transform: rotate(90deg);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    header {
+        padding: 1.2rem;
+        text-align: center;
+        background: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        margin-bottom: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    header p {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .chat-container {
+        height: 75vh;
+        margin-top: 1rem;
+    }
+
+    .chat-header {
+        padding: 1rem;
+        background: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+    }
+
+    .chat-header-left {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .chat-header-left i {
+        font-size: 1.2rem;
+        color: var(--secondary);
+    }
+
+    .chat-header-left span {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .end-conversation-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0.5rem;
+        background: var(--primary-dark);
+        border: 1px solid var(--secondary);
+    }
+
+    .end-conversation-btn i {
+        font-size: 1rem;
+        color: var(--text-primary);
+    }
+
+    .chat-box {
+        height: calc(100% - 120px);
+        padding: 10px;
+    }
+
+    .message-content {
+        max-width: 85%;
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    .user-input {
+        padding: 10px;
+    }
+
+    .user-input input {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .user-input button {
+        padding: 8px 12px;
+    }
+
+    .theme-toggle {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .theme-toggle i {
+        font-size: 0.9rem;
+    }
+
+    .sidebar {
+        width: 0;
+        padding: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .footer {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-container {
+        height: 85vh;
+    }
+
+    .message-content {
+        max-width: 90%;
+        font-size: 0.85rem;
+    }
+
+    .chat-header-left span {
+        font-size: 0.8rem;
+    }
+
+    .end-conversation-btn {
+        width: 24px;
+        height: 24px;
+        padding: 0.3rem;
+    }
+
+    .end-conversation-btn i {
+        font-size: 0.8rem;
+    }
+
+    .user-input input {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+
+    .user-input button {
+        padding: 6px 10px;
+    }
+
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header p {
+        font-size: 0.9rem;
+    }
+
+    .chat-header {
+        padding: 0.8rem;
+    }
+
+    .chat-header-left span {
+        font-size: 1rem;
+    }
+
+    .chat-header-left i {
+        font-size: 1.1rem;
+    }
+} 

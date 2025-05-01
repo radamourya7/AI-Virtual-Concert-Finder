@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Concert Finder - AI Chatbot</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Find virtual and in-person concerts in America with our AI-powered chatbot">
+    <!-- Open Graph Meta Tags for better social sharing -->
+    <meta property="og:title" content="Virtual Concert Finder - AI Chatbot">
+    <meta property="og:description" content="Discover music concerts across America with our AI chatbot">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cdn.pixabay.com/photo/2016/11/22/19/15/audience-1850119_960_720.jpg">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <!-- GitHub Pages deployment indicator for script.js to handle -->
+    <meta name="deployment" content="github-pages">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </button>
+    <div class="sidebar">
+        <div class="author-info">
+            <h2>Mourya Rada</h2>
+            <p>Developer</p>
+        </div>
+        <a href="calendar.html" target="_blank" class="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-2xl hover:from-blue-600 hover:to-indigo-700">
+            <span>📅</span>
+          </a>                    
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Virtual Concert Finder</h1>
+            <p>Find music concerts happening across America</p>
+        </header>
+
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <i class="fas fa-robot"></i>
+                    <span>Concert AI Assistant</span>
+                </div>
+                <button class="end-conversation-btn" id="endConversation" title="End Conversation">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chat-box" id="chatBox">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Hello! I'm your concert finder assistant. I'd love to get to know you better. What's your name?
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-input">
+                <input type="text" id="userMessage" placeholder="Type your name here...">
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                
+            </div>
+        </div>
+               
+        <div class="footer">
+            <p>Powered by <a href="https://developer.ticketmaster.com/" target="_blank">Ticketmaster API</a> | 
+               <a href="https://github.com/yourusername/virtual-concert-chatbot" target="_blank">View on GitHub</a></p>
+        </div>
+    </div>
+    
+    <script src="public/js/script.js"></script>
+    <!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+</body>
+</html> 
