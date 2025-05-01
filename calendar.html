@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Concert Calendar</title>
+  <title>My Aesthetic Concert Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       background: linear-gradient(to right, #f5f7fa, #c3cfe2);
@@ -56,234 +56,58 @@
       background-color: #c0392b;
     }
 
-    /* Status menu styles */
-    .status-menu {
-      position: fixed;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 100;
-      padding: 8px 0;
-      min-width: 150px;
-      display: none;
+    @media (max-width: 768px) {
+      .calendar-container {
+        margin: 20px;
+        padding: 20px;
+      }
+      .calendar-title {
+        font-size: 2.2em;
+      }
+      .clear-button {
+        width: 100%;
+        padding: 14px;
+        font-size: 18px;
+      }
     }
 
-    .status-option {
-      padding: 8px 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .status-option:hover {
-      background: #f5f7fa;
-    }
-
-    .status-option i {
-      width: 16px;
-      text-align: center;
-    }
-
-    .event-status {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .status-canceled {
-      background-color: #e74c3c;
-    }
-
-    .status-attended {
-      background-color: #2ecc71;
-    }
-
-    .status-pending {
-      background-color: #f39c12;
-    }
-
-    .event-details {
-      background: white;
-      padding: 16px;
-      border-radius: 8px;
-      max-width: 300px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    @media (max-width: 480px) {
+      .calendar-title {
+        font-size: 1.8em;
+      }
     }
   </style>
 </head>
 <body>
   <div class="calendar-container">
-    <h1 class="calendar-title">My Concert Calendar</h1>
+    <h1 class="calendar-title">My Aesthetic Concert Calendar</h1>
     <div id="calendar"></div>
     <div class="button-container">
       <button class="clear-button" onclick="clearCalendar()">Clear Calendar</button>
     </div>
   </div>
 
-  <div class="status-menu" id="statusMenu">
-    <div class="status-option" data-status="canceled">
-      <i class="fas fa-times-circle" style="color: #e74c3c;"></i>
-      <span>Cancel</span>
-    </div>
-    <div class="status-option" data-status="attended">
-      <i class="fas fa-check-circle" style="color: #2ecc71;"></i>
-      <span>Attended</span>
-    </div>
-    <div class="status-option" data-status="pending">
-      <i class="fas fa-hourglass-half" style="color: #f39c12;"></i>
-      <span>Pending</span>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <script>
     let calendar;
-    let currentEvent = null;
-    const statusMenu = document.getElementById('statusMenu');
 
     document.addEventListener('DOMContentLoaded', () => {
       const savedEvents = JSON.parse(localStorage.getItem('concertEvents')) || [];
-      const eventsWithStatus = savedEvents.map(e => ({
-        ...e,
-        id: e.id || Date.now().toString(),
-        status: e.status || 'pending' // Default status
-      }));
 
       calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
-        events: eventsWithStatus.map(e => ({
-          id: e.id,
+        events: savedEvents.map(e => ({
           title: e.title,
           start: e.date,
-          description: e.location,
-          status: e.status,
-          backgroundColor: getStatusColor(e.status),
-          borderColor: getStatusColor(e.status),
-          extendedProps: {
-            location: e.location,
-            status: e.status
-          }
+          description: e.location
         })),
-        eventContent: function(arg) {
-          const statusDot = document.createElement('div');
-          statusDot.className = `event-status status-${arg.event.extendedProps.status}`;
-          
-          const titleEl = document.createElement('div');
-          titleEl.textContent = arg.event.title;
-          
-          const content = document.createElement('div');
-          content.style.position = 'relative';
-          content.appendChild(titleEl);
-          content.appendChild(statusDot);
-          
-          return { domNodes: [content] };
-        },
         eventClick: function(info) {
-          currentEvent = info.event;
-          
-          // Show event details first
-          const details = `
-            <div class="event-details">
-              <h3>${info.event.title}</h3>
-              <p><strong>Date:</strong> ${info.event.start.toLocaleDateString()}</p>
-              <p><strong>Location:</strong> ${info.event.extendedProps.location}</p>
-              <p><strong>Status:</strong> ${info.event.extendedProps.status}</p>
-              <button id="changeStatusBtn" style="margin-top: 10px; padding: 8px 12px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                Change Status
-              </button>
-            </div>
-          `;
-          
-          // Create a custom popup
-          const popup = document.createElement('div');
-          popup.innerHTML = details;
-          popup.style.position = 'fixed';
-          popup.style.zIndex = '100';
-          popup.style.top = `${info.jsEvent.clientY}px`;
-          popup.style.left = `${info.jsEvent.clientX}px`;
-          
-          // Remove any existing popups
-          document.querySelectorAll('.event-details-popup').forEach(el => el.remove());
-          popup.className = 'event-details-popup';
-          document.body.appendChild(popup);
-          
-          // Add click handler for status change button
-          document.getElementById('changeStatusBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            popup.remove();
-            showStatusMenu(info.jsEvent);
-          });
-          
-          // Close popup when clicking outside
-          setTimeout(() => {
-            document.addEventListener('click', function closePopup() {
-              popup.remove();
-              document.removeEventListener('click', closePopup);
-            });
-          }, 100);
+          alert(info.event.title + "\n" + info.event.extendedProps.description);
         }
       });
 
       calendar.render();
     });
-
-    function showStatusMenu(clickEvent) {
-      // Position the menu near the click
-      statusMenu.style.display = 'block';
-      statusMenu.style.left = `${clickEvent.clientX}px`;
-      statusMenu.style.top = `${clickEvent.clientY}px`;
-      
-      // Close menu when clicking elsewhere
-      document.addEventListener('click', function closeMenu(e) {
-        if (!statusMenu.contains(e.target)) {
-          statusMenu.style.display = 'none';
-          document.removeEventListener('click', closeMenu);
-        }
-      });
-    }
-
-    // Handle status selection
-    document.querySelectorAll('.status-option').forEach(option => {
-      option.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const status = this.getAttribute('data-status');
-        updateEventStatus(currentEvent, status);
-        statusMenu.style.display = 'none';
-      });
-    });
-
-    function updateEventStatus(event, status) {
-      // Update event appearance
-      event.setProp('backgroundColor', getStatusColor(status));
-      event.setProp('borderColor', getStatusColor(status));
-      event.setExtendedProp('status', status);
-      
-      // Update in localStorage
-      const savedEvents = JSON.parse(localStorage.getItem('concertEvents')) || [];
-      const updatedEvents = savedEvents.map(e => {
-        if (e.id === event.id) {
-          return { ...e, status: status };
-        }
-        return e;
-      });
-      localStorage.setItem('concertEvents', JSON.stringify(updatedEvents));
-      
-      // Refresh calendar to show changes
-      calendar.refetchEvents();
-    }
-
-    function getStatusColor(status) {
-      switch(status) {
-        case 'canceled': return '#f8d7da';
-        case 'attended': return '#d4edda';
-        case 'pending': return '#fff3cd';
-        default: return '#e3f2fd';
-      }
-    }
 
     function clearCalendar() {
       if (confirm("Are you sure you want to clear all saved concerts?")) {
